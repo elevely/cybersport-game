@@ -3,10 +3,12 @@ from models.coach import Coach
 from models.team import Team
 from models.match import Match
 from models.world import World
+from models.tournament import Tournament
 
 from services.match_simulator import MatchSimulator
 from services.world_sumulator import WorldSimulator
 from services.team_factory import create_test_team
+from services.tournament_simulator import TournamentSimulator
 
 team_names = [
     "NAVI",
@@ -26,15 +28,10 @@ teams = [
     for name in team_names
 ]
 
-world = World(teams)
+tournament = Tournament(
+    name="IEM Katowice",
+    prize_pool=1000000,
+    teams=teams[:8]
+)
 
-WorldSimulator.simulate_week(world)
-
-print("\nTABLE")
-
-for team in world.teams:
-    print(
-        f"{team.name} | "
-        f"W:{team.wins} "
-        f"L:{team.losses}"
-    )
+TournamentSimulator.play(tournament)
