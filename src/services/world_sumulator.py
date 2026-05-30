@@ -23,7 +23,7 @@ class WorldSimulator:
 
             match = Match(team_a, team_b)
 
-            winner = MatchSimulator.simulate(match)
+            winner, loser = MatchSimulator.simulate(match)
 
             if winner == team_a:
                 team_a.wins += 1

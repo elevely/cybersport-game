@@ -20,6 +20,6 @@ class MatchSimulator:
         win_chance = power_a / (power_a + power_b)
 
         if random.random() < win_chance:
-            return match.team_a
+            return (match.team_a, match.team_b)
 
-        return match.team_b
+        return (match.team_b, match.team_a)
