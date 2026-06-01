@@ -1,3 +1,5 @@
+import sys
+
 from models.player import Player
 from models.coach import Coach
 from models.team import Team
@@ -6,6 +8,7 @@ from models.world import World
 from models.tournament import Tournament
 from models.manager import Manager
 from models.organization import Organization
+from models.game_date import GameDate
 
 from services.match_simulator import MatchSimulator
 from services.world_sumulator import WorldSimulator
@@ -62,17 +65,28 @@ def start_game():
         team=selected_team
     )
 
+    world = World(
+        manager=manager,
+        organization=organization,
+        teams=teams,
+        date=GameDate(
+            day=1,
+            month=1,
+            year=2026
+        )
+    )
+
     print(
         f"\nВы стали менеджером "
         f"{organization.name}"
     )
 
-    return manager, organization
+    return manager, organization, world
 
 def general_info():
     print('')
     print(f'====================')
-    print(f'Дата: {World.current_day}.{World.current_month}.{World.current_year}')
+    print(f'Дата: {world.date.day}.{world.date.month}.{world.date.year}')
     print('')
     print(f'Менеджер: {manager.name}')
     print(f'Организация: {organization.name}')
@@ -88,9 +102,23 @@ def action_selection():
 
     choice = input('> ')
 
-manager, organization = start_game()
+    if choice == "2":
+        world.advance_day()
+
+        print(
+            f"\nНаступило "
+            f"{world.date.day:02d}."
+            f"{world.date.month:02d}."
+            f"{world.date.year}"
+        )
+    
+    if choice == '3':
+        sys.exit()
+
+
+
+manager, organization, world = start_game()
 
 while True:
     general_info()
     action_selection()
-    break
