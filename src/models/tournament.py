@@ -1,8 +1,11 @@
 from dataclasses import dataclass
-from models.team import Team
+from models.organization import Organization
 
 @dataclass
 class Tournament:
     name: str
     prize_pool: int
-    teams: list[Team]
+    start_day: int
+    start_month: int
+    start_year: int
+    organizations: list[Organization]

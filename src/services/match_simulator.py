@@ -8,8 +8,8 @@ class MatchSimulator:
     @staticmethod
     def simulate(match: Match):
 
-        power_a = match.team_a.get_strength()
-        power_b = match.team_b.get_strength()
+        power_a = match.organization_a.team.get_strength()
+        power_b = match.organization_b.team.get_strength()
 
         form_a = random.uniform(-5, 5)
         form_b = random.uniform(-5, 5)
@@ -20,6 +20,6 @@ class MatchSimulator:
         win_chance = power_a / (power_a + power_b)
 
         if random.random() < win_chance:
-            return (match.team_a, match.team_b)
+            return (match.organization_a, match.organization_b)
 
-        return (match.team_b, match.team_a)
+        return (match.organization_a, match.organization_b)

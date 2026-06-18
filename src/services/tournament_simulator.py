@@ -3,27 +3,28 @@ from models.match import Match
 
 from services.match_simulator import MatchSimulator
 
+from data.organizations import ORGANIZATIONS
+
 class TournamentSimulator:
     
     @staticmethod
-    def play_round(teams, place_teams):
+    def play_round(organizatoins, place_teams):
         team_winners = []
         
-        for i in range(0, len(teams), 2):
-            team_a = teams[i]
-            team_b = teams[i+1]
+        for i in range(0, len(organizatoins), 2):
+            organizatoins_a = organizatoins[i]
+            organizatoins_b = organizatoins[i+1]
 
-            match = Match(team_a, team_b)
+            match = Match(organizatoins_a, organizatoins_b)
             winner, loser = MatchSimulator.simulate(match)
             
             place_teams.append(loser)
 
-            print(f'{team_a.name} vs {team_b.name}')
+            print(f'{organizatoins_a.name} vs {organizatoins_b.name}')
             print(f'Winner: {winner.name}')
 
             team_winners.append(winner)
         
-
         return team_winners
     
     @staticmethod
@@ -34,7 +35,7 @@ class TournamentSimulator:
         print("=== Quarterfinals ===")
 
         quarterfinal_winners = TournamentSimulator.play_round(
-            tournament.teams,
+            tournament.organizations,
             place_teams
         )
 
@@ -73,7 +74,8 @@ class TournamentSimulator:
             champion,
             second_place,
             third_fourth,
-            fifth_eighth
+            fifth_eighth,
+            tournament
         )
 
         print(f"\nChampion: {champion.name}")
@@ -84,8 +86,8 @@ class TournamentSimulator:
         return champion
     
     @staticmethod
-    def distribute_prize_money(champion, second_place, third_fourth, fifth_eighth):    
-        prize_pool = Tournament.prize_pool
+    def distribute_prize_money(champion, second_place, third_fourth, fifth_eighth, tournament):    
+        prize_pool = tournament.prize_pool
         champion.money += prize_pool * 0.51
         second_place.money += prize_pool * 0.25
         for team in third_fourth:

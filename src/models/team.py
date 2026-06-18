@@ -5,12 +5,8 @@ from models.coach import Coach
 
 @dataclass
 class Team:
-    name: str
     players: list[Player]
     coach: Coach
-    money: int
-    wins: int = 0
-    losses: int = 0
 
     def get_strength(self) -> float:
         avg_general_aim = sum(player.general_aim for player in self.players) / len(self.players)

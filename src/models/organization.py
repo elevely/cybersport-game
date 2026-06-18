@@ -6,4 +6,8 @@ from models.team import Team
 class Organization:
     name: str
     money: int
+    
     team: Team
+
+    wins: int = 0
+    losses: int = 0
